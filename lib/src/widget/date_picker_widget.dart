@@ -7,7 +7,6 @@ import '../date_time_formatter.dart';
 import '../date_picker_theme.dart';
 import '../date_picker_constants.dart';
 import '../i18n/date_picker_i18n.dart';
-import 'date_picker_title_widget.dart';
 
 /// Solar months of 31 days.
 const List<int> _solarMonthsOf31Days = const <int>[1, 3, 5, 7, 8, 10, 12];
@@ -19,7 +18,6 @@ const List<int> _solarMonthsOf31Days = const <int>[1, 3, 5, 7, 8, 10, 12];
 class DatePickerWidget extends StatefulWidget {
   DatePickerWidget({
     Key? key,
-    this.onMonthChangeStartWithFirstDate,
     this.minDateTime,
     this.maxDateTime,
     this.initialDateTime,
@@ -42,7 +40,6 @@ class DatePickerWidget extends StatefulWidget {
 
   final DateVoidCallback? onCancel;
   final DateValueCallback? onChange, onConfirm;
-  final onMonthChangeStartWithFirstDate;
 
   @override
   State<StatefulWidget> createState() => _DatePickerWidgetState(
@@ -119,34 +116,7 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
   Widget _renderPickerView(BuildContext context) {
     Widget datePickerWidget = _renderDatePickerWidget();
 
-    // display the title widget
-    if (widget.pickerTheme.title != null || widget.pickerTheme.showTitle) {
-      Widget titleWidget = DatePickerTitleWidget(
-        () => _onPressedCancel(),
-        () => _onPressedConfirm(),
-        pickerTheme: widget.pickerTheme,
-        locale: widget.locale,
-      );
-      return Column(children: <Widget>[titleWidget, datePickerWidget]);
-    }
     return datePickerWidget;
-  }
-
-  /// pressed cancel widget
-  void _onPressedCancel() {
-    if (widget.onCancel != null) {
-      widget.onCancel!();
-    }
-    Navigator.pop(context);
-  }
-
-  /// pressed confirm widget
-  void _onPressedConfirm() {
-    if (widget.onConfirm != null) {
-      DateTime dateTime = DateTime(_currYear, _currMonth, _currDay);
-      widget.onConfirm!(dateTime, _calcSelectIndexList());
-    }
-    Navigator.pop(context);
   }
 
   /// notify selected date changed
