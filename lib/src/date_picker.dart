@@ -52,7 +52,6 @@ class DatePicker {
     DateValueCallback? onChange,
     DateValueCallback? onConfirm,
     int minuteDivider = 1,
-    bool onMonthChangeStartWithFirstDate = false,
   }) {
     // handle the range of datetime
     if (minDateTime == null) {
@@ -89,7 +88,6 @@ class DatePicker {
     Navigator.push(
       context,
       new _DatePickerRoute(
-        onMonthChangeStartWithFirstDate: onMonthChangeStartWithFirstDate,
         minDateTime: minDateTime,
         maxDateTime: maxDateTime,
         initialDateTime: initialDateTime,
@@ -111,7 +109,6 @@ class DatePicker {
 
 class _DatePickerRoute<T> extends PopupRoute<T> {
   _DatePickerRoute({
-    this.onMonthChangeStartWithFirstDate,
     this.minDateTime,
     this.maxDateTime,
     this.initialDateTime,
@@ -137,7 +134,6 @@ class _DatePickerRoute<T> extends PopupRoute<T> {
   final DateValueCallback? onChange;
   final DateValueCallback? onConfirm;
   final int minuteDivider;
-  final bool? onMonthChangeStartWithFirstDate;
 
   final ThemeData? theme;
 
